@@ -1,7 +1,11 @@
+/* In case database cars exists already, this code deletes it and creates a new database with the same name.*/
 DROP DATABASE IF EXISTS cars;
-CREATE DATABASE cars; 
+CREATE DATABASE cars;
+
+# Defines which database to use 
 USE cars;
 
+# Creates the tables required for the lab.
 -- -----------------------------------------------------
 -- Table `cars`.`cars`
 -- -----------------------------------------------------
@@ -47,32 +51,26 @@ CREATE TABLE IF NOT EXISTS `cars`.`salesperson` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `cars`.`invoices` (
   `invoice_id` INT NOT NULL,
-  `date_` DATE NULL DEFAULT NULL,
-  `car` VARCHAR(20) NOT NULL,
-  `costumer` VARCHAR(20) NULL DEFAULT NULL,
-  `salesperson` VARCHAR(20) NULL DEFAULT NULL,
-  `salesperson_salesperson_id` INT NOT NULL,
-  `cars_car_id` INT NOT NULL,
-  `costumer_costumer_id` INT NOT NULL,
+  `date_` DATE NULL DEFAULT NULL,  
+  `car_id` INT NOT NULL,
+  `costumer_id` INT NULL DEFAULT NULL,
+  `salesperson_id` INT NULL DEFAULT NULL,
   PRIMARY KEY (`invoice_id`),
-  INDEX `fk_invoices_salesperson_idx` (`salesperson_salesperson_id` ASC) VISIBLE,
-  INDEX `fk_invoices_cars1_idx` (`cars_car_id` ASC) VISIBLE,
-  INDEX `fk_invoices_costumer1_idx` (`costumer_costumer_id` ASC) VISIBLE,
-  CONSTRAINT `fk_invoices_salesperson`
-    FOREIGN KEY (`salesperson_salesperson_id`)
+  INDEX `fk_invoices_salesperson_idx` (`salesperson_id` ASC) VISIBLE,
+  INDEX `fk_invoices_cars1_idx` (`car_id` ASC) VISIBLE,
+  INDEX `fk_invoices_costumer1_idx` (`costumer_id` ASC) VISIBLE,
+  CONSTRAINT `fk_invoices_salesperson_id`
+    FOREIGN KEY (`salesperson_id`)
     REFERENCES `cars`.`salesperson` (`salesperson_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_invoices_cars1`
-    FOREIGN KEY (`cars_car_id`)
+    FOREIGN KEY (`car_id`)
     REFERENCES `cars`.`cars` (`car_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_invoices_costumer1`
-    FOREIGN KEY (`costumer_costumer_id`)
+    FOREIGN KEY (`costumer_id`)
     REFERENCES `cars`.`costumer` (`costumer_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-
-
-
